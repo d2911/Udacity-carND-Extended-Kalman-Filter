@@ -45,6 +45,7 @@ First Step in Updation is to measure the error in prediction against measurement
 
 `Z_pred = H * X_pred`  
 (2x1) = (2x4) * (4x1)  
+
 `y_err = Z_meas - Z_pred`  
 (2x1) = (2x1) - (2x1)
 
@@ -52,6 +53,7 @@ Other required matrix are calculated.
 
 `S = H*P*Ht + R`where R is Measurement covariance  
 (2x2) = (2x4)*(4x4)*(4x2)+(2x2)  
+
 `K = P*Ht*Si` where Si is Inverse of S  
 (4x2) = (4x4)*(4x2)*(2x2)
 
@@ -59,6 +61,7 @@ With these Matrix calculated, new state and its covariance are estimated.
 
 `x = (K * y_err) + X_Pred`  
 (4x1) = (4x2)*(2x1)  + (4x1)  
+
 `p = (I - K*H) + P_pred` where I is identity matrix  
 (4x4) = ((4x4) - (4x2) * (2x4)) + (4x4)
 
@@ -86,6 +89,7 @@ Other required matrix are calculated.
 
 `S = H*P*Ht + R`where R is Measurement covariance and H is Jacobian Matrix  
 (3x3) = (3x4)*(4x4)*(4x3)+(3x3)  
+
 `K = P*Ht*Si` where Si is Inverse of S  
 (4x3) = (4x4)*(4x3)*(3x3)
 
@@ -93,6 +97,7 @@ With these Matrix calculated, fianl state and its covariance are estimated.
 
 `x = (K * y_err) + X_Pred`  
 (4x1) = (4x3)*(3x1)  + (4x1)  
+
 `p = (I - K*H) + P_pred` where I is identity matrix  
 (4x4) = ((4x4) - (4x3) * (3x4)) + (4x4)
 
@@ -110,9 +115,9 @@ Do not consfure this error with y_err in Measurment step, where y_err is measure
 
 ## Visualizing in simulator
 
-Lidar - Blue Points
-Radar - Red points
-Predicted states - Green
-Ground Truth - Black
+Lidar Measurments - Blue Points  
+Radar Measuremnts - Red points  
+Predicted states - Green  
+Rightside RMSE for x-position, y-position, Vel-x-direction and Vel-y-direction are shown.
 
 ![](/IMG/5.gif)
