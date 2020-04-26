@@ -45,10 +45,11 @@ First Step in Updation is to measure the error in prediction against measurement
 
 `Z_pred = H * X_pred`  
 (2x1) = (2x4) * (4x1)  
-`y_err = Z_meas - Z_pred`
+`y_err = Z_meas - Z_pred`  
 (2x1) = (2x1) - (2x1)
 
 Other required matrix are calculated.
+
 `S = H*P*Ht + R`where R is Measurement covariance  
 (2x2) = (2x4)*(4x4)*(4x2)+(2x2)  
 `K = P*Ht*Si` where Si is Inverse of S  
@@ -61,15 +62,51 @@ With these Matrix calculated, new state and its covariance are estimated.
 `p = (I - K*H) + P_pred` where I is identity matrix  
 (4x4) = ((4x4) - (4x2) * (2x4)) + (4x4)
 
+Considering state as gaussian distribution prediction increases the sigma and measurment decreases it, this makes the estimation converging to reliable values.
+
 ### processing Radar Data
+
+Radar data is different to Lidar data, we get angular distance, anlge in radian and angular velocity which is polar co-ordiante system. 
 
 **Prediction Step**
 
+As our ulitimate aim is to fuse Lidar and Radar, This step can be still calculated in form of celestial co-ordiantes. So prediction step in Lidar holds good for Radar as-well.
+
 **Update Step**
+
+One tweak in Update step is in the error calculation step, as Radar measurement 'z_meas' is in polar co-ordinate, X_pred in prediction step is converted from celestail to polar co-ordinate form 'Z_pred'.  
+
+`Z_pred (3x3) is calculated as below`  
+![](/IMG/4.jpg)
+
+`y_err = Z_meas - Z_pred`  
+(3x1) = (3x1) - (3x1)
+
+Other required matrix are calculated.
+
+`S = H*P*Ht + R`where R is Measurement covariance and H is Jacobian Matrix  
+(3x3) = (3x4)*(4x4)*(4x3)+(3x3)  
+`K = P*Ht*Si` where Si is Inverse of S  
+(4x3) = (4x4)*(4x3)*(3x3)
+
+With these Matrix calculated, fianl state and its covariance are estimated.
+
+`x = (K * y_err) + X_Pred`  
+(4x1) = (4x3)*(3x1)  + (4x1)  
+`p = (I - K*H) + P_pred` where I is identity matrix  
+(4x4) = ((4x4) - (4x3) * (3x4)) + (4x4)
 
 ### Fusion
 
 ![](/IMG/3.jpg)
+
+One important point to take care is initialisation step, as Fusion system consideres its final estimated state in celestial co-ordiante when we get first data from Radar, we must convert data from polar to celestial co-ordiantes and initialize the states.
+
+### Error in System
+
+RMS error is calculated w.r.t. final estimated state and ground truth values which is available with actual measurment data.
+
+Do not consfure this error with y_err in Measurment step, where y_err is measure of error in particular measurment w.r.t prediction but this is error of final estimate. 
 
 ## Visualizing in simulator
 
@@ -78,4 +115,4 @@ Radar - Red points
 Predicted states - Green
 Ground Truth - Black
 
-![](/IMG/4.gif)
+![](/IMG/5.gif)
