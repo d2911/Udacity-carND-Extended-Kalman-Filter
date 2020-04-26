@@ -121,3 +121,5 @@ Predicted states - Green
 Rightside RMSE for x-position, y-position, Vel-x-direction and Vel-y-direction are shown.
 
 ![](/IMG/5.gif)
+
+_Credits: All pictures from Udacity contents_
